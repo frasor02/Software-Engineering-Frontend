@@ -15,9 +15,5 @@ onMounted( () => {
 
 <template>
 <h1>Parcheggi:</h1>
-  <ul>
-    <li v-for="park in park.value" :key="park.self">
-      <a :href="HOST+park.self">{{park.nome}}</a>
-    </li>
-  </ul>
+  <p>{{park.value.parcheggi}}</p>
 </template>
