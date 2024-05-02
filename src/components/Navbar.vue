@@ -12,11 +12,11 @@ import { RouterLink } from 'vue-router'
         </router-link>
         <v-spacer></v-spacer>
         <v-divider vertical ></v-divider>
-        <v-btn append-icon="mdi-account" variant="text" to="/register" size="x-large">
+        <v-btn append-icon="mdi-account" variant="text" to="/register" size="x-large" color="blue-darken-3">
         Register
         </v-btn>
         <v-divider vertical ></v-divider>
-        <v-btn append-icon="mdi-login" variant="text" to="/login" size="x-large">
+        <v-btn append-icon="mdi-login" variant="text" to="/login" size="x-large" color="blue-darken-3">
         Log-in
         </v-btn>
     </v-toolbar>
