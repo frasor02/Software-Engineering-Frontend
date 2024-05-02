@@ -7,7 +7,7 @@ import { RouterLink } from 'vue-router'
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
         <router-link to="/" style="text-decoration: none; color: inherit;">
             <v-toolbar-title>
-                <span class="font-weight-bold capitalize">Ricerca Parcheggio Efficace</span>
+                <span class="font-weight-bold capitalize text-blue-darken-3">Ricerca Parcheggio Efficace</span>
             </v-toolbar-title>
         </router-link>
         <v-spacer></v-spacer>
