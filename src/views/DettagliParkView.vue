@@ -1,3 +1,7 @@
+<script setup>
+import DettagliPark from '@/components/DettagliPark.vue';
+</script>
+
 <template>
-    dettagli
+    <DettagliPark></DettagliPark>
 </template>

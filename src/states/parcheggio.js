@@ -5,11 +5,11 @@ const API_URL = 'http://localhost:3000';
 const PARK_URL = API_URL+'/parcheggio/';
 
 const park = reactive([]);
+const parkid = ref(null);
 const error = ref(null);
 
 // Funzione che fa il fetch della GET su /parcheggio/ nel backend
 async function fetchPark(){
-    park.value = await (await fetch(PARK_URL)).json();
     try{
         let data = await fetch(PARK_URL);
         if(!data.ok){
@@ -17,10 +17,22 @@ async function fetchPark(){
         }
         data = await data.json();
         park.value = data.parcheggi;
-        console.log(park.value)
     }catch(err){
         error.value = err.message;
     }
 };
 
-export { park,error, fetchPark };
+// Funzione che fa il GET id su parcheggio/parcheggioId nel backend
+async function fetchParkId(parcheggioId){
+    try{
+        let data = await fetch(PARK_URL + parcheggioId);
+        if(!data.ok){
+            throw new Error("Data not found");
+        }
+        parkid.value = await data.json();
+    }catch(err){
+        error.value = err.message;
+    }
+};
+
+export { park,parkid, error, fetchPark, fetchParkId };
