@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ParcheggioView from '../views/ParcheggioView.vue'
 import DettagliParkView from '../views/DettagliParkView.vue'
+import RicercaView from '../views/RicercaView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
 
@@ -22,6 +23,12 @@ const router = createRouter({
       path: '/parcheggio/:parcheggioId',
       name: 'dettaglipark',
       component: DettagliParkView,
+      props: true
+    },
+    {
+      path: '/parcheggio/ricerca',
+      name: 'ricerca',
+      component: RicercaView,
       props: true
     },
     {
