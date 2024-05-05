@@ -17,7 +17,7 @@ onMounted( () => {
 <template>
   <div class="Parcheggio">
     <div v-if="error">{{ error }}</div>
-    <div v-if="!park.value"><v-progress-circular indeterminate></v-progress-circular></div>
+    <div v-else-if="!park.value"><v-progress-circular indeterminate></v-progress-circular></div>
     <div v-else>
       <div v-for="p in park.value" :key="p._id" class="d-flex justify-center  mb-6">
           <router-link v-if="p._id !== undefined" :to="{name: 'dettaglipark', params: {parcheggioId: p._id}}" style="text-decoration: none; color: inherit;">

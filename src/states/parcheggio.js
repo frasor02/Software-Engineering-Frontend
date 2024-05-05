@@ -6,6 +6,7 @@ const PARK_URL = API_URL+'/parcheggio/';
 
 const park = reactive([]);
 const parkid = ref(null);
+const parksearch = reactive([])
 const error = ref(null);
 
 // Funzione che fa il fetch della GET su /parcheggio/ nel backend
@@ -35,4 +36,55 @@ async function fetchParkId(parcheggioId){
     }
 };
 
-export { park,parkid, error, fetchPark, fetchParkId };
+// Funzione che fa il GET ricerca per trovare il posto più vicino ad un parcheggio
+async function fetchParkSearch(meta, isCoperto, comboPosti, comboVeicolo){
+    let dis, grav, auto, moto, furgone, bus;
+    switch(comboPosti){
+        case "Disabili":{
+            dis = true; grav = false;
+            break;
+        }
+        case "Donne in attesa":{
+            dis = false; grav = true;
+            break;
+        }
+        default:{
+            dis = false; grav = false;
+            break;
+        }
+    }
+    switch(comboVeicolo){
+        case "Auto":{
+            auto = true; moto= false; furgone=false; bus=false;
+            break;
+        }
+        case "Moto":{
+            auto = false; moto= true; furgone=false; bus=false;
+            break;
+        }
+        case "Furgone":{
+            auto = false; moto= false; furgone=true; bus=false;
+            break;
+        }
+        case "Bus":{
+            auto = false; moto= false; furgone=false; bus=true;
+            break;
+        }
+        default:{
+            auto = false; moto= false; furgone=false; bus=false;
+            break;
+        }
+    }
+    try{
+        console.log(PARK_URL + ":" + meta + "/:" + isCoperto + "/:" + dis + "/:" + grav + "/:" + auto + "/:"+ moto + "/:" + furgone + "/:" + bus)
+        let data = await fetch(PARK_URL + ":" + meta + "/:" + isCoperto + "/:" + dis + "/:" + grav + "/:" + auto + "/:"+ moto + "/:" + furgone + "/:" + bus);
+        if(!data.ok){
+            throw new Error("Data not found");
+        }
+        parksearch.value = await data.json();
+    }catch(err){
+        error.value = err.message;
+    }
+};
+
+export { park,parkid,parksearch, error, fetchPark, fetchParkId,  fetchParkSearch};
