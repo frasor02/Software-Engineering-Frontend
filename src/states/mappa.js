@@ -12,4 +12,8 @@ function mountMap(lat, long){
     }).addTo(map.value);
 }
 
-export { map, mountMap }
+function addMarker(lat, long){
+    let marker = new leaflet.Marker(leaflet.latLng(lat, long)).addTo(map.value)
+}
+
+export { map, mountMap, addMarker }
