@@ -1,12 +1,23 @@
 <script setup>
-import {onMounted } from 'vue';
+import {onMounted, ref, onUpdated} from 'vue';
 import { parkid, errorid, fetchParkId } from '../states/parcheggio.js';
+import Map from './Map.vue';
 const props = defineProps(['parcheggioId'])
 
+const componentKey = ref(0);
 
+const forceRerender = () => {
+  componentKey.value += 1;
+};
+
+onUpdated(()=>{
+        forceRerender();
+})
 
 onMounted(() => {
     fetchParkId(props.parcheggioId);
+    
+    //map.value.setView(new leaflet.LatLng(40.737, -73.923), 8);
 })
 </script>
 
@@ -48,6 +59,8 @@ onMounted(() => {
                 <div v-if="parkid.res._type === 'ParcheggioVigilato'">
                     <v-btn variant="outlined">Prenota un posto</v-btn>
                 </div>
+                <div>{{ parkid.res.posizione.coordinates[0] }} {{ parkid.res.posizione.coordinates[1] }}</div>
+                <div><Map :lat="parkid.res.posizione.coordinates[0]" :long="parkid.res.posizione.coordinates[1]" :key="componentKey" /></div>
             </v-list-item>
         </v-list>
         
