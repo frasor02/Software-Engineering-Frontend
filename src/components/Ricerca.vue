@@ -1,11 +1,14 @@
 <script setup>
-import {ref} from 'vue'
+import { ref} from 'vue'
 import {parksearch, errorsearch, fetchParkSearch} from '../states/parcheggio'
+import MapSearch from './MapSearch.vue'
 
 const meta = ref(null)
 const isCoperto = ref(false);
 const comboPosti = ref(null);
 const comboVeicolo = ref(null);
+
+
 
 let rules = [ () => { 
     if(meta.value){
@@ -25,6 +28,7 @@ function ricerca(){
 
 <template>
     <v-card variant="text" title="Ricerca Parcheggio" text="Le seguenti opzioni consentono di cercare un parcheggio che rispetta le tue esigenze!">
+        <map-search></map-search>
         <v-form  v-on:submit.prevent="ricerca">
             <v-text-field
             v-model="meta"
