@@ -1,6 +1,6 @@
 <script setup>
 import {ref} from 'vue'
-import {parksearch, error, fetchParkSearch} from '../states/parcheggio'
+import {parksearch, errorsearch, fetchParkSearch} from '../states/parcheggio'
 
 const meta = ref(null)
 const isCoperto = ref(false);
@@ -45,7 +45,7 @@ function ricerca(){
         </v-form>
     </v-card>
     <div class="d-flex justify-right  mb-6">
-        <div v-if="error">{{ error }}</div>
+        <div v-if="errorsearch">{{ errorsearch }}</div>
         <div v-else-if="!parksearch.value"></div>
         <div v-else>{{parksearch}}</div>
     </div>

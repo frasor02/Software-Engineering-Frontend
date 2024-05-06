@@ -8,6 +8,8 @@ const park = reactive([]);
 const parkid = ref(null);
 const parksearch = reactive([])
 const error = ref(null);
+const errorid = ref(null);
+const errorsearch = ref(null);
 
 // Funzione che fa il fetch della GET su /parcheggio/ nel backend
 async function fetchPark(){
@@ -32,7 +34,7 @@ async function fetchParkId(parcheggioId){
         }
         parkid.value = await data.json();
     }catch(err){
-        error.value = err.message;
+        errorid.value = err.message;
     }
 };
 
@@ -83,8 +85,8 @@ async function fetchParkSearch(meta, isCoperto, comboPosti, comboVeicolo){
         }
         parksearch.value = await data.json();
     }catch(err){
-        error.value = err.message;
+        errorsearch.value = err.message;
     }
 };
 
-export { park,parkid,parksearch, error, fetchPark, fetchParkId,  fetchParkSearch};
+export { park,parkid,parksearch, error, errorid, errorsearch, fetchPark, fetchParkId,  fetchParkSearch};

@@ -1,6 +1,6 @@
 <script setup>
 import {onMounted } from 'vue';
-import { parkid, error, fetchParkId } from '../states/parcheggio.js';
+import { parkid, errorid, fetchParkId } from '../states/parcheggio.js';
 const props = defineProps(['parcheggioId'])
 
 
@@ -11,7 +11,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div v-if="error">{{ error }}</div>
+    <div v-if="errorid">{{ errorid }}</div>
     <div v-else-if="!parkid"><v-progress-circular indeterminate></v-progress-circular></div>
     <div v-else class="d-flex justify-center  mb-6">
         <v-list lines="one">
