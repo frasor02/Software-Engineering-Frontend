@@ -2,7 +2,7 @@ import { ref, reactive } from 'vue'
 
 const HOST = 'http://localhost:5173';
 const API_URL = 'http://localhost:3000';
-const PARK_URL = API_URL+'/parcheggio/';
+const PARK_URL = API_URL+'/v1/parcheggio/';
 
 const park = reactive([]);
 const parkid = ref(null);
