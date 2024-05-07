@@ -4,7 +4,7 @@
 
 <script setup>
 import {onMounted,ref } from 'vue';
-import {mapSearch} from "@/states/mappa.js"
+import {mapSearch, startingCoord, startingZoom, mapBounds} from "@/states/mappa.js"
 import leaflet from "leaflet";
 
 
@@ -12,19 +12,20 @@ const markers = ref([])
 
 const emit = defineEmits(['clicked']);
 
+
 function onMapSearchClick(e){
     if(markers.value.length > 0){
         let marker = markers.value.pop();
         mapSearch.value.removeLayer(marker);
     }
-        let marker = new leaflet.Marker(e.latlng).addTo(mapSearch.value);
+        let marker = new leaflet.Marker(e.latlng, {title:"Meta selezionata"}).addTo(mapSearch.value);
         markers.value.push(marker);
         emit('clicked', e.latlng);
 
 }
 
 onMounted(() => {
-    mapSearch.value = leaflet.map('mapSearch').setView([46.06722058076118, 11.122747968511277], 13);
+    mapSearch.value = leaflet.map('mapSearch',{minZoom:12,maxBounds:mapBounds}).setView(startingCoord, startingZoom);
     leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'

@@ -1,12 +1,15 @@
 <script setup>
 import {ref, watch} from 'vue';
 import { RouterLink } from 'vue-router';
+import { useTheme } from 'vuetify/lib/framework.mjs';
 const drawer = ref(false);
-const items = [
-    {icon: 'mdi-magnify', text: 'Ricerca parcheggio', route: '/parcheggio/ricerca'},
-    {icon: 'mdi-parking', text: 'Vedi i parcheggi', route: '/parcheggio/'},
-    {icon: 'mdi-parking', text: 'Conosci il progetto', route: '/about/'}
-]
+const theme = ref(false);
+const realTheme = useTheme();
+
+function changeTheme(){
+    theme.value = !theme.value;
+    realTheme.global.name.value = theme.value ? "dark" : "light";
+}
 
 </script>
 
@@ -19,6 +22,8 @@ const items = [
             </v-toolbar-title>
         </router-link>
         <v-spacer></v-spacer>
+        <v-divider vertical ></v-divider>
+        <v-btn icon variant="text" @click="changeTheme"><v-icon :icon="theme ? 'mdi-weather-sunny' : 'mdi-weather-night'"></v-icon></v-btn>
         <v-divider vertical ></v-divider>
         <v-btn append-icon="mdi-account" variant="text" to="/register" size="x-large" color="blue-darken-3">
         Register
