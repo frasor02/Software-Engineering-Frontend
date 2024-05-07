@@ -25,7 +25,7 @@ onMounted(() => {
     <div v-else class="d-flex justify-center  mb-6">
         <v-list lines="one">
             <v-list-item>
-                <h3>{{parkid.res.nome}}</h3>
+                <h1>{{parkid.res.nome}}</h1>
                 <div  v-if="parkid.res._type === 'ParcheggioFree'">
                     <v-chip variant="outlined">
                     Parcheggio gratuito
@@ -57,7 +57,7 @@ onMounted(() => {
                 <div v-if="parkid.res._type === 'ParcheggioVigilato'">
                     <v-btn variant="outlined">Prenota un posto</v-btn>
                 </div>
-                <div><h1>Posizione:</h1></div>
+                <div><h3>Posizione:</h3></div>
                 <div><Map :lat="parkid.res.posizione.coordinates[0]" :long="parkid.res.posizione.coordinates[1]" :key="componentKey" /></div>
             </v-list-item>
         </v-list>
