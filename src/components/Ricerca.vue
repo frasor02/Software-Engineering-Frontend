@@ -3,24 +3,25 @@ import { ref} from 'vue'
 import {parksearch, errorsearch, fetchParkSearch} from '../states/parcheggio'
 import MapSearch from './MapSearch.vue'
 
-const meta = ref(null)
+const lat = ref(null)
+const long = ref(null)
+const notMeta = ref(null)
 const isCoperto = ref(false);
 const comboPosti = ref(null);
 const comboVeicolo = ref(null);
 
 
-
-let rules = [ () => { 
-    if(meta.value){
-        return true;
-    }
-    return "Devi inserire una meta"
-}];
+function onMapClick(value){
+    lat.value = value.lat;
+    long.value= value.lng;
+}
 
 function ricerca(){
-    if(!meta.value){
+    if(!(lat.value && long.value)){
+        notMeta.value = true;
     }else{
-        fetchParkSearch(meta.value, isCoperto.value, comboPosti.value, comboVeicolo.value);
+        notMeta.value = false;
+        fetchParkSearch(lat.value, long.value, isCoperto.value, comboPosti.value, comboVeicolo.value);
     }
 }
 </script>
@@ -28,14 +29,9 @@ function ricerca(){
 
 <template>
     <v-card variant="text" title="Ricerca Parcheggio" text="Le seguenti opzioni consentono di cercare un parcheggio che rispetta le tue esigenze!">
-        <map-search></map-search>
         <v-form  v-on:submit.prevent="ricerca">
-            <v-text-field
-            v-model="meta"
-            label="Meta desiderata (in coordinate)"
-            :rules="rules"
-            required
-            ></v-text-field>
+            <div v-if="notMeta">Inserire una meta!</div>
+            <map-search @clicked="onMapClick"></map-search>
             <v-checkbox v-model="isCoperto ":label="'Coperto:'"></v-checkbox>
             <v-combobox v-model="comboPosti"
             label="Posti"
