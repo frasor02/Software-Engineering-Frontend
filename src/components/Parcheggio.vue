@@ -1,16 +1,14 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { onMounted } from 'vue';
 import { RouterLink } from 'vue-router'
 import { park, error, fetchPark } from '../states/parcheggio.js';
 
-const HOST = 'http://localhost:5173';
-const API_URL = 'http://localhost:3000';
-const PARK_URL = API_URL+'/parcheggio/';
 
 // fetch in inizializzazione
 onMounted( () => {
   fetchPark();
-})
+});
+
 
 </script>
 

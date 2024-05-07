@@ -39,47 +39,48 @@ async function fetchParkId(parcheggioId){
 };
 
 // Funzione che fa il GET ricerca per trovare il posto più vicino ad un parcheggio
-async function fetchParkSearch(meta, isCoperto, comboPosti, comboVeicolo){
-    let dis, grav, auto, moto, furgone, bus;
+async function fetchParkSearch(lat, long, isCoperto, comboPosti, comboVeicolo){
+    let tipoUtente, tipoVeicolo;
     switch(comboPosti){
         case "Disabili":{
-            dis = true; grav = false;
+            tipoUtente = "disabile";
             break;
         }
         case "Donne in attesa":{
-            dis = false; grav = true;
+            tipoUtente = "gravidanza";
             break;
         }
         default:{
-            dis = false; grav = false;
+            tipoUtente = null;
             break;
         }
     }
     switch(comboVeicolo){
         case "Auto":{
-            auto = true; moto= false; furgone=false; bus=false;
+            tipoVeicolo = "auto";
             break;
         }
         case "Moto":{
-            auto = false; moto= true; furgone=false; bus=false;
+            tipoVeicolo = "moto";
             break;
         }
         case "Furgone":{
-            auto = false; moto= false; furgone=true; bus=false;
+            tipoVeicolo = "furgone";
             break;
         }
         case "Bus":{
-            auto = false; moto= false; furgone=false; bus=true;
+            tipoVeicolo = "bus";
             break;
         }
         default:{
-            auto = false; moto= false; furgone=false; bus=false;
+            tipoVeicolo = null;
             break;
         }
     }
     try{
-        console.log(PARK_URL + ":" + meta + "/:" + isCoperto + "/:" + dis + "/:" + grav + "/:" + auto + "/:"+ moto + "/:" + furgone + "/:" + bus)
-        let data = await fetch(PARK_URL + ":" + meta + "/:" + isCoperto + "/:" + dis + "/:" + grav + "/:" + auto + "/:"+ moto + "/:" + furgone + "/:" + bus);
+        const ricercaURL = PARK_URL + "ricerca?lat=" + lat + "&long=" + long + "&isCoperto=" + isCoperto + "&tipoUtente=" + tipoUtente + "&tipoVeicolo=" + tipoVeicolo;
+        console.log(ricercaURL)
+        let data = await fetch(PARK_URL + "ricerca?lat=" + lat + "&long=" + long + "&isCoperto=" + isCoperto + "&tipoUtente=" + tipoUtente + "&tipoVeicolo=" + tipoVeicolo);
         if(!data.ok){
             throw new Error("Data not found");
         }

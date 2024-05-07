@@ -18,18 +18,18 @@ function changeTheme(){
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <router-link to="/" style="text-decoration: none; color: inherit;">
             <v-toolbar-title>
-                <span class="font-weight-bold capitalize text-blue-darken-3">Ricerca Parcheggio Efficace</span>
+                <span class="font-weight-bold capitalize text-blue-darken-2">Ricerca Parcheggio Efficace</span>
             </v-toolbar-title>
         </router-link>
         <v-spacer></v-spacer>
         <v-divider vertical ></v-divider>
-        <v-btn icon variant="text" @click="changeTheme"><v-icon :icon="theme ? 'mdi-weather-sunny' : 'mdi-weather-night'"></v-icon></v-btn>
+        <v-btn icon variant="text" @click="changeTheme" color="blue-darken-2"><v-icon :icon="theme ? 'mdi-weather-sunny' : 'mdi-weather-night'"></v-icon></v-btn>
         <v-divider vertical ></v-divider>
-        <v-btn append-icon="mdi-account" variant="text" to="/register" size="x-large" color="blue-darken-3">
+        <v-btn append-icon="mdi-account" variant="text" to="/register" size="x-large" color="blue-darken-2">
         Register
         </v-btn>
         <v-divider vertical ></v-divider>
-        <v-btn append-icon="mdi-login" variant="text" to="/login" size="x-large" color="blue-darken-3">
+        <v-btn append-icon="mdi-login" variant="text" to="/login" size="x-large" color="blue-darken-2">
         Log-in
         </v-btn>
     </v-toolbar>
