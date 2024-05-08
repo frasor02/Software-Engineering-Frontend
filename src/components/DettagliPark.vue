@@ -58,7 +58,7 @@ onMounted(() => {
                     <v-btn variant="outlined">Prenota un posto</v-btn>
                 </div>
                 <div><h3>Posizione:</h3></div>
-                <div><Map :lat="parkid.res.posizione.coordinates[0]" :long="parkid.res.posizione.coordinates[1]" :key="componentKey" /></div>
+                <div><Map :lat="parkid.res.posizione.coordinates[1]" :long="parkid.res.posizione.coordinates[0]" :key="componentKey" /></div>
             </v-list-item>
         </v-list>
         
