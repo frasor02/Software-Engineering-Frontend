@@ -19,5 +19,6 @@
   function login(){
     console.log(email.value)
     console.log(password.value)
+    
   }
   </script>
