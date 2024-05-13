@@ -1,5 +1,5 @@
 <template>
-    <<div class="d-flex justify-center  mb-6">
+    <div class="d-flex justify-center  mb-6">
       <v-card flat>
       <h1>Log-in</h1>
       <p>Accedi al nostro servizio!</p>
