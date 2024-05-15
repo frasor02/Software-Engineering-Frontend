@@ -1,5 +1,5 @@
 <script setup>
-import {ref, watch} from 'vue';
+import {ref, watch, onMounted} from 'vue';
 import { RouterLink } from 'vue-router';
 import { useTheme } from 'vuetify/lib/framework.mjs';
 const drawer = ref(false);
@@ -11,6 +11,15 @@ function changeTheme(){
     realTheme.global.name.value = theme.value ? "dark" : "light";
 }
 
+function logOut(){
+   localStorage.removeItem("token"); 
+}
+
+const token = ref()
+
+onMounted(() => {
+    token.value = localStorage.getItem('token');
+})
 </script>
 
 <template>
@@ -25,13 +34,18 @@ function changeTheme(){
         <v-divider vertical ></v-divider>
         <v-btn icon variant="text" @click="changeTheme" color="blue-darken-2"><v-icon :icon="theme ? 'mdi-weather-sunny' : 'mdi-weather-night'"></v-icon></v-btn>
         <v-divider vertical ></v-divider>
-        <v-btn append-icon="mdi-account" variant="text" to="/register" size="x-large" color="blue-darken-2">
-        Register
-        </v-btn>
-        <v-divider vertical ></v-divider>
-        <v-btn append-icon="mdi-login" variant="text" to="/login" size="x-large" color="blue-darken-2">
-        Log-in
-        </v-btn>
+        <div v-if="!token">
+            <v-btn append-icon="mdi-account" variant="text" to="/register" size="x-large" color="blue-darken-2">
+            Register
+            </v-btn>
+            <v-divider vertical ></v-divider>
+            <v-btn append-icon="mdi-login" variant="text" to="/login" size="x-large" color="blue-darken-2">
+            Log-in
+            </v-btn>
+        </div>
+        <div v-else>
+            <v-btn append-icon="mdi-logout" variant="text" size="x-large" color="blue-darken-2" @click="logOut"> Log Out </v-btn>
+        </div>
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" app temporary  class="bg-blue-lighten-5">
         <v-list>

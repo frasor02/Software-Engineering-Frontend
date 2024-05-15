@@ -7,6 +7,8 @@ const TOKEN_URL = API_URL+'/v1/token/';
 
 const response_registrazione = reactive({});
 const errore = ref(null);
+const response_login = reactive({});
+const errore_login = ref(null);
 
 // Funzione che fa il fetch della POST su /utente/ nel backend
 async function fetchRegistrazione(email, password, metodoPagamento, tipoVeicolo, targa){
@@ -36,4 +38,27 @@ async function fetchRegistrazione(email, password, metodoPagamento, tipoVeicolo,
     }
 };
 
-export { response_registrazione, errore, fetchRegistrazione};
+async function fetchLogin(email, password){
+   let richiesta={
+    email: email,
+    password: password
+   }
+   try{
+    let response = await fetch(TOKEN_URL, {
+        method:"POST",
+        mode: 'cors',
+        headers: {
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify(richiesta)
+    });
+    if(!response.ok){
+        throw new Error("Login fallita");
+    }
+    response_login.value = await response.json();
+    }catch(err){
+        errore.value = err.message;
+    }
+};
+
+export { response_registrazione, response_login, errore, errore_login, fetchRegistrazione, fetchLogin};
