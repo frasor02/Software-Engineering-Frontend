@@ -28,7 +28,7 @@ async function fetchPark(){
 // Funzione che fa il GET id su parcheggio/parcheggioId nel backend
 async function fetchParkId(parcheggioId){
     try{
-        let data = await fetch(PARK_URL + ":" + parcheggioId);
+        let data = await fetch(PARK_URL + ":"  + parcheggioId);
         if(!data.ok){
             throw new Error("Data not found");
         }
