@@ -56,6 +56,8 @@ async function fetchLogin(email, password){
         throw new Error("Login fallita");
     }
     response_login.value = await response.json();
+    localStorage.setItem('token', response_login.value.token);
+    window.location.reload();
     }catch(err){
         errore.value = err.message;
     }
