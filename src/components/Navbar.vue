@@ -2,9 +2,11 @@
 import {ref, watch, onMounted} from 'vue';
 import { RouterLink } from 'vue-router';
 import { useTheme } from 'vuetify/lib/framework.mjs';
+import { useRouter } from 'vue-router';
 const drawer = ref(false);
 const theme = ref(false);
 const realTheme = useTheme();
+const router = useRouter();
 
 function changeTheme(){
     theme.value = !theme.value;
@@ -13,6 +15,12 @@ function changeTheme(){
 
 function logOut(){
    localStorage.removeItem("token"); 
+   router.push({
+    path: '/'
+   }).then(() => {
+    router.go(0);
+   });
+
 }
 
 const token = ref()

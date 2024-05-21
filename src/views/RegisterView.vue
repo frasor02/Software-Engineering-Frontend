@@ -2,6 +2,7 @@
     <div class="d-flex justify-center  mb-6">
       <v-card flat>
         <h1>Registrazione</h1>
+        <div v-if="!token">
         <div class="d-flex justify-center  mb-6">
           <v-card flat>
             <div v-if="errore"> {{errore}} </div>
@@ -9,24 +10,28 @@
             <div v-else> Registrazione avvenuta con successo </div>
           </v-card>
         </div>
-        <p>Registrati al nostro servizio!</p>
-        <v-form v-on:submit.prevent="registrazione">
-        <v-text-field :rules="ruleEmail" label="Email" variant="outlined" v-model="email"></v-text-field>
-        <v-text-field :rules="rulePassword" label="Password" variant="outlined" v-model="password"></v-text-field>
-       <v-text-field :rules="ruleConfirmPassword" label="Conferma Password" variant="outlined" v-model="confirmPassword"></v-text-field>
-        <v-combobox :rules="ruleVeicolo" :items="['auto', 'moto', 'furgone', 'bus']" label="Tipo di veicolo" v-model="tipoVeicolo"></v-combobox>
-        <v-text-field :rules="ruleTarga" label="Targa del veicolo" variant="outlined" v-model="targa"></v-text-field>
-        <v-combobox :rules="rulePagamento" :items="['carta di credito', 'carta di debito', 'paypal']" label="Metodo di pagamento" v-model="metodoPagamento"></v-combobox>
-        <v-checkbox :rules="ruleMaggiorenne" label="Dichiaro di essere maggiorenne" v-model="isAdult"></v-checkbox>
-        <v-btn type="submit" svariant="outlined"> Conferma registrazione</v-btn>
-        </v-form> 
+          <p>Registrati al nostro servizio!</p>
+          <v-form v-on:submit.prevent="registrazione">
+          <v-text-field :rules="ruleEmail" label="Email" variant="outlined" v-model="email"></v-text-field>
+          <v-text-field :rules="rulePassword" label="Password" variant="outlined" v-model="password"></v-text-field>
+          <v-text-field :rules="ruleConfirmPassword" label="Conferma Password" variant="outlined" v-model="confirmPassword"></v-text-field>
+          <v-combobox :rules="ruleVeicolo" :items="['auto', 'moto', 'furgone', 'bus']" label="Tipo di veicolo" v-model="tipoVeicolo"></v-combobox>
+          <v-text-field :rules="ruleTarga" label="Targa del veicolo" variant="outlined" v-model="targa"></v-text-field>
+          <v-combobox :rules="rulePagamento" :items="['carta di credito', 'carta di debito', 'paypal']" label="Metodo di pagamento" v-model="metodoPagamento"></v-combobox>
+          <v-checkbox :rules="ruleMaggiorenne" label="Dichiaro di essere maggiorenne" v-model="isAdult"></v-checkbox>
+          <v-btn type="submit" svariant="outlined"> Conferma registrazione</v-btn>
+          </v-form> 
+        </div>
+        <div v-else>
+          <span>Login già effettuato</span>
+        </div>
       </v-card>
     </div>
   </template>
 
   <script setup>
   import {response_registrazione, errore, fetchRegistrazione} from "../states/utente.js"
-  import {ref} from "vue"
+  import {onMounted, ref} from "vue"
   const email=ref()
   const password=ref()
   const confirmPassword = ref()
@@ -34,6 +39,11 @@
   const tipoVeicolo = ref()
   const metodoPagamento = ref()
   const targa = ref()
+  const token = ref();
+
+  onMounted(() => {
+    token.value = localStorage.getItem('token')
+  })
 
   function registrazione(){
 
