@@ -2,20 +2,22 @@
 import {onMounted, ref, onUpdated} from 'vue';
 import { parkid, errorid, fetchParkId } from '../states/parcheggio.js';
 import Map from './Map.vue';
-const props = defineProps(['parcheggioId'])
+const props = defineProps(['parcheggioId']);
 
 const componentKey = ref(0);
+const token = ref();
 
 const forceRerender = () => {
   componentKey.value += 1;
 };
 
 onUpdated(()=>{
-        forceRerender();
+    forceRerender();
 })
 
 onMounted(() => {
     fetchParkId(props.parcheggioId);
+    token.value = localStorage.getItem('token');
 })
 </script>
 
@@ -55,14 +57,28 @@ onMounted(() => {
                 <span v-else>Parcheggio non coperto</span></div>
                 <div><span>Stato del parcheggio: {{parkid.res.statoParcheggio}}</span></div>
                 <div v-if="parkid.res._type === 'ParcheggioVigilato'">
-                    <v-btn variant="outlined">Prenota un posto</v-btn>
+                    <div v-if="!token">
+                        <v-container >
+                            <v-row align="center" justify="start">
+                            <v-col cols="auto">
+                                <v-btn variant="outlined" disabled>Prenota un posto</v-btn>
+                            </v-col>
+
+                            <v-col cols="auto">
+                                <span>Effettuare il login</span>
+                            </v-col>
+                            </v-row>
+                        </v-container>
+                    </div>
+                    <div v-else>
+                        <router-link :to="{name: 'prenotazione', params:{parcheggioId: props.parcheggioId}}" style="text-decoration: none; color: inherit;">
+                        <v-btn variant="outlined">Prenota un posto</v-btn>
+                        </router-link>
+                    </div>
                 </div>
                 <div><h3>Posizione:</h3></div>
                 <div><Map :lat="parkid.res.posizione.coordinates[1]" :long="parkid.res.posizione.coordinates[0]" :key="componentKey" /></div>
             </v-list-item>
         </v-list>
-        
-        
-        
     </div>
 </template>

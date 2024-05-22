@@ -5,6 +5,7 @@ import DettagliParkView from '../views/DettagliParkView.vue'
 import RicercaView from '../views/RicercaView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
+import PrenotazioneView from '../views/PrenotazioneView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,12 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView
+    },
+    {
+      path: '/prenotazione/:parcheggioId',
+      name: 'prenotazione',
+      props: true,
+      component: PrenotazioneView
     },
     {
       path: '/about',

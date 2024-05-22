@@ -24,7 +24,7 @@
   <script setup>
   import {response_login, errore_login, fetchLogin} from "../states/utente.js"
   import {onMounted, ref} from "vue"
-  const email=ref("test@example.com")
+  const email=ref("testpren@test.com")
   const password=ref("test")
   const token = ref()
 
