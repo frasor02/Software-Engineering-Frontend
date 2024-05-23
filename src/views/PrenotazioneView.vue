@@ -1,6 +1,6 @@
 <script setup>
     import { onMounted, ref } from 'vue';
-    import { responsePrenotazione, errore, scadenzaPrenotazione, scadenzaCancellazione, createPrenotazione } from '../states/prenotazione';
+    import { responsePrenotazione, errorePrenotazione, scadenzaPrenotazione, scadenzaCancellazione, createPrenotazione } from '../states/prenotazione';
 
     const props = defineProps(['parcheggioId']); 
     const token = ref(null);
@@ -29,7 +29,7 @@
             </v-form> 
         </div>
         <div class="d-flex justify-center  ma-6">
-            <div v-if="errore"> {{errore}} </div>
+            <div v-if="errorePrenotazione"> {{errorePrenotazione}} </div>
             <div v-else-if="!responsePrenotazione"> Compila i campi </div>
             <div v-else> 
                 <v-card flat>

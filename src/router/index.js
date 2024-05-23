@@ -6,6 +6,7 @@ import RicercaView from '../views/RicercaView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
 import PrenotazioneView from '../views/PrenotazioneView.vue'
+import ListaPrenotazioniView from '../views/ListaPrenotazioniView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,6 +48,11 @@ const router = createRouter({
       name: 'prenotazione',
       props: true,
       component: PrenotazioneView
+    },
+    {
+      path: '/prenotazioni',
+      name: 'listaPrenotazioni',
+      component: ListaPrenotazioniView
     },
     {
       path: '/about',
