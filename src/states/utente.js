@@ -39,6 +39,7 @@ async function fetchRegistrazione(email, password, metodoPagamento, tipoVeicolo,
 };
 
 async function fetchLogin(email, password){
+    errore_login.value = null;
    let richiesta={
     email: email,
     password: password
@@ -59,7 +60,7 @@ async function fetchLogin(email, password){
     localStorage.setItem('token', response_login.value.token);
     window.location.reload();
     }catch(err){
-        errore.value = err.message;
+        errore_login.value = err.message;
     }
 };
 
