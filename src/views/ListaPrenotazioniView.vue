@@ -46,6 +46,8 @@
                             <v-card-item>Parcheggio: {{ p.nomeParcheggio }}</v-card-item>
                             <v-card-item>Tipo posto: {{ p.tipoPosto }}</v-card-item>
                             <v-card-item>Veicolo: {{ p.veicolo.tipoVeicolo + ', ' + p.veicolo.targa }}</v-card-item>
+                            <v-card-item>Scadenza prenotazione: {{ new Date(new Date(p.dataPrenotazione).getTime() + 60*60*1000).toTimeString().split(' ')[0] }}</v-card-item>
+                            <v-card-item>Scadenza cancellazione: {{ new Date(new Date(p.dataPrenotazione).getTime() + 30*60*1000).toTimeString().split(' ')[0] }}</v-card-item>
                             <v-card-actions>
                                 <v-icon v-if="p.tipoPosto === 'normale'">mdi-parking</v-icon>
                                 <v-icon v-else-if="p.tipoPosto === 'disabili'" color="blue">mdi-wheelchair</v-icon>

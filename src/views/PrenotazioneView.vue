@@ -5,6 +5,8 @@
     const props = defineProps(['parcheggioId']); 
     const token = ref(null);
     const tipoPosto = ref("Normale");
+    const disabled = ref(false);
+    const timeout = ref(null);
 
     onMounted(() => {
         token.value = localStorage.getItem('token');
@@ -14,6 +16,12 @@
     function prenotazione(){
         if (props.parcheggioId && tipoPosto.value && token.value){
             createPrenotazione(props.parcheggioId, tipoPosto.value, token.value);
+            if (!errorePrenotazione.value){
+                disabled.value = true;
+                timeout.value = setTimeout(() => {
+                    disabled.value = false;
+                }, 3000);
+            }
         }
     };
 </script>
@@ -26,7 +34,7 @@
         <div class="d-flex justify-center">
             <v-form v-on:submit.prevent="prenotazione">
             <v-combobox :items="['Normale', 'Disabili', 'Gravidanza']" label="Tipo di posto" v-model="tipoPosto"></v-combobox>
-            <v-btn type="submit" svariant="outlined"> Conferma prenotazione</v-btn>
+            <v-btn :disabled="disabled" type="submit" svariant="outlined"> Conferma prenotazione</v-btn>
             </v-form> 
         </div>
         <div class="d-flex justify-center  ma-6">

@@ -23,22 +23,26 @@ const errDelete = ref(null);
  * @param {String} token jwt creato dopo l'autenticazione e salvato nel localStorage.
  */
 async function createPrenotazione(parcheggioId, tipoPosto, token){
-    tipoPosto = tipoPosto.toLowerCase();
-    const requestOptions = {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        },
-        body: JSON.stringify({
-            parcheggioId: parcheggioId, 
-            tipoPosto: tipoPosto 
-        }) 
-    };
     try {
         errorePrenotazione.value = null;
         responsePrenotazione.value = null;
+        if (typeof(tipoPosto) != 'string'){
+            throw new Error('Tipo posto inesistente')
+        }
+        tipoPosto = tipoPosto.toLowerCase();
+        const requestOptions = {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({
+                parcheggioId: parcheggioId, 
+                tipoPosto: tipoPosto 
+            }) 
+        };
+
         const response = await fetch(PRENOTAZIONE_URL, requestOptions);
         if (!response.ok){
             throw new Error('Prenotazione fallita');
