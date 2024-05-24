@@ -8,6 +8,7 @@
 
     onMounted(() => {
         token.value = localStorage.getItem('token');
+        responsePrenotazione.value = null;
     });
 
     function prenotazione(){

@@ -12,7 +12,16 @@ const scadenzaCancellazione = ref(null);
 const resFetch = reactive([]);
 const errFetch = ref(null);
 
-// Funzione che fa la POST della prenotazione di un posto in un parcheggio vigilato
+const resDelete = ref(null);
+const errDelete = ref(null);
+
+/**
+ * Funzione che fa la POST della prenotazione di un posto in un parcheggio vigilato.
+ * L'utente deve essere autenticato.
+ * @param {Object} parcheggioId ID del parcheggio in cui si vuole effettuare la prenotazione.
+ * @param {String} tipoPosto Tipo di posto scelto per la prenotazione.
+ * @param {String} token jwt creato dopo l'autenticazione e salvato nel localStorage.
+ */
 async function createPrenotazione(parcheggioId, tipoPosto, token){
     tipoPosto = tipoPosto.toLowerCase();
     const requestOptions = {
@@ -28,6 +37,8 @@ async function createPrenotazione(parcheggioId, tipoPosto, token){
         }) 
     };
     try {
+        errorePrenotazione.value = null;
+        responsePrenotazione.value = null;
         const response = await fetch(PRENOTAZIONE_URL, requestOptions);
         if (!response.ok){
             throw new Error('Prenotazione fallita');
@@ -44,7 +55,11 @@ async function createPrenotazione(parcheggioId, tipoPosto, token){
     }
 };
 
-// Funzione che fa la GET delle prenotazioni di un utente
+/**
+ * Funzione che fa la GET delle prenotazioni di un utente.
+ * L'utente deve essere autenticato.
+ * @param {String} token jwt creato dopo l'autenticazione e salvato nel localStorage.
+ */
 async function fetchPrenotazioni(token){
     const requestOptions = {
         method: 'GET',
@@ -73,4 +88,35 @@ async function fetchPrenotazioni(token){
     }
 };
 
-export {responsePrenotazione, errorePrenotazione, scadenzaPrenotazione, scadenzaCancellazione, resFetch, errFetch, createPrenotazione, fetchPrenotazioni};
+/**
+ * Funzione che fa la DELETE di una prenotazione dato prenotazioneId. 
+ * L'utente deve essere autenticato.
+ * @param {Object} prenotazioneId ID della prenotazione da cancellare.
+ * @param {String} token jwt creato dopo l'autenticazione e salvato nel localStorage.
+ */
+async function deletePrenotazione(prenotazioneId, token){
+    const requestOptions = {
+        method: 'DELETE',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({
+            prenotazioneId: prenotazioneId
+        })
+    };
+    try {
+        errDelete.value = null;
+        const response = await fetch(PRENOTAZIONE_URL + ':' + prenotazioneId, requestOptions);
+        if (!response.ok){
+            throw new Error('Delete fallita');
+        }
+        resDelete.value = await response.json();
+        console.log(resDelete)
+    } catch(err) {
+        errDelete.value = err.message;
+    }
+};
+
+export {responsePrenotazione, errorePrenotazione, scadenzaPrenotazione, scadenzaCancellazione, resFetch, errFetch, resDelete, errDelete, createPrenotazione, fetchPrenotazioni, deletePrenotazione};

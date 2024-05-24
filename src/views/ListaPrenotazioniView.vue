@@ -1,8 +1,16 @@
 <script setup>
-    import { onMounted, ref } from 'vue';
-    import { resFetch, errFetch, fetchPrenotazioni } from '../states/prenotazione';
+    import { onMounted, onUpdated, ref } from 'vue';
+    import { resFetch, errFetch, resDelete, errDelete, fetchPrenotazioni, deletePrenotazione } from '../states/prenotazione';
+    import router from '../router';
+
+    const componentKey = ref(0);
 
     const token = ref(null);
+    const lastDeleteId = ref(null);
+// SISTEMARE DATE
+    onUpdated(() => {
+        ++componentKey.value;
+    });
 
     onMounted(() => {
         token.value = localStorage.getItem('token');
@@ -10,6 +18,16 @@
             fetchPrenotazioni(token.value);
         }
     });
+
+    async function delPrenotazione(prenotazioneId){
+        console.log(errDelete)
+        console.log(prenotazioneId)
+        lastDeleteId.value = prenotazioneId;
+        await deletePrenotazione(prenotazioneId, token.value);
+        if (!errDelete.value){
+            router.go(0);
+        }
+    }
 </script>
 
 <template>
@@ -37,9 +55,10 @@
                 <v-card class="align-self-center ml-1">
                     <v-hover v-slot="{ isHovering, props }">
                         <v-card-actions>
-                            <v-btn :color="isHovering ? 'red' : undefined" v-bind="props" icon>
+                            <v-btn :color="isHovering ? 'red' : undefined" v-bind="props" icon @click="delPrenotazione(p._id)">
                                 <v-icon color="red-lighten-1">mdi-trash-can-outline</v-icon>
                             </v-btn>
+                            <v-card-text v-if="errDelete && p._id == lastDeleteId">{{ errDelete }}</v-card-text>
                         </v-card-actions>
                     </v-hover>
                 </v-card>
