@@ -7,7 +7,7 @@
 
     const token = ref(null);
     const lastDeleteId = ref(null);
-// SISTEMARE DATE
+
     onUpdated(() => {
         ++componentKey.value;
     });
@@ -19,9 +19,12 @@
         }
     });
 
+    /**
+     * Funziona wrapper della funzione deletePrenotazione che ricorda 
+     * l'ID della prenotazione cancellata per mostrare l'errore.
+     * @param prenotazioneId ID della prenotazione da cancellare.
+     */
     async function delPrenotazione(prenotazioneId){
-        console.log(errDelete)
-        console.log(prenotazioneId)
         lastDeleteId.value = prenotazioneId;
         await deletePrenotazione(prenotazioneId, token.value);
         if (!errDelete.value){
@@ -39,7 +42,7 @@
                 <router-link v-if="p._id !== undefined" :to="{name: 'dettaglipark', params: {parcheggioId: p.parcheggioId}}" style="text-decoration: none; color: inherit;">
                     <v-hover v-slot="{ isHovering, props }">
                         <v-card :color="isHovering ? 'grey-lighten-3' : undefined" v-bind="props" class="pa-6">
-                            <h3>Prenotazione: {{ Date(p.dataPrenotazione).toString().split('GMT')[0] }}</h3>
+                            <h3>Prenotazione: {{ new Date(p.dataPrenotazione).toString().split('GMT')[0] }}</h3>
                             <v-card-item>Parcheggio: {{ p.nomeParcheggio }}</v-card-item>
                             <v-card-item>Tipo posto: {{ p.tipoPosto }}</v-card-item>
                             <v-card-item>Veicolo: {{ p.veicolo.tipoVeicolo + ', ' + p.veicolo.targa }}</v-card-item>
