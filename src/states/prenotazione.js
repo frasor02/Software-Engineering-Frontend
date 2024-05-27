@@ -83,7 +83,7 @@ async function fetchPrenotazioni(token){
     } catch(err) {
         errFetch.value = err.message;
     }
-    for (let p of resFetch.value){ //????????
+    for (let p of resFetch.value){
         try {
             await fetchParkId(p.parcheggioId);
             p.nomeParcheggio = parkid.value.res.nome;

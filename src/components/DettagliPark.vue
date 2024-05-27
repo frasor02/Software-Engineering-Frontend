@@ -1,6 +1,7 @@
 <script setup>
 import {onMounted, ref, onUpdated} from 'vue';
 import { parkid, errorid, fetchParkId } from '../states/parcheggio.js';
+import { responseFeedbackPark, errorFeedbackPark, fetch_get_feedback_park } from '../states/feedback.js';
 import Map from './Map.vue';
 const props = defineProps(['parcheggioId']);
 
@@ -17,14 +18,17 @@ onUpdated(()=>{
 
 onMounted(() => {
     fetchParkId(props.parcheggioId);
+    fetch_get_feedback_park(props.parcheggioId);
     token.value = localStorage.getItem('token');
 })
 </script>
 
 <template>
-    <div v-if="errorid">{{ errorid }}</div>
+    <v-sheet class="d-flex flex-wrap justify-center">
+    <v-sheet class=" ma-2 pa-2 ">
+        <div v-if="errorid">{{ errorid }}</div>
     <div v-else-if="!parkid"><v-progress-circular indeterminate></v-progress-circular></div>
-    <div v-else class="d-flex justify-center  mb-6">
+    <div v-else class="d-flex   mb-6">
         <v-list lines="one">
             <v-list-item>
                 <h1>{{parkid.res.nome}}</h1>
@@ -81,4 +85,30 @@ onMounted(() => {
             </v-list-item>
         </v-list>
     </div>
+    </v-sheet>
+    <v-sheet class="ma-2 pa-2">
+        <div v-if="errorFeedbackPark">{{ errorFeedbackPark }}</div>
+        <div v-else-if="!responseFeedbackPark"><v-progress-circular indeterminate></v-progress-circular></div>
+        <div v-else class="d-flex justify-center  mb-6">
+            <v-card flat>
+            <div><h1> Recensioni: </h1></div>
+            <div v-for="p in responseFeedbackPark.value" :key="p._id">
+                <v-card variant="outlined" class="ma-2 pa-2">
+                    <h3>Rating:</h3>
+                    <v-rating readonly
+                    v-model="p.rating"
+                    active-color="blue"
+                    color="orange-lighten-1"
+                    ></v-rating>
+                    <p>Da: {{ p.utenteMail }}</p>
+                    <p> {{ p.testoFeedback }}</p>
+                </v-card>
+                <v-divider></v-divider>
+            </div>
+            </v-card>
+        </div>
+    </v-sheet>
+
+    </v-sheet>
+   
 </template>
