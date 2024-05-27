@@ -1,9 +1,9 @@
 import { ref, reactive } from 'vue'
 
-const HOST = 'http://localhost:5173';
-const API_URL = 'http://localhost:3000';
-const REGISTRAZIONE_URL = API_URL+'/v1/utente/';
-const TOKEN_URL = API_URL+'/v1/token/';
+const HOST = import.meta.env.VITE_API_HOST || `http://localhost:3000`;
+const API_URL = HOST + '/v1';
+const REGISTRAZIONE_URL = API_URL+'/utente/';
+const TOKEN_URL = API_URL+'/token/';
 
 const response_registrazione = reactive({});
 const errore = ref(null);

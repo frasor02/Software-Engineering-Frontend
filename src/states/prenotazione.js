@@ -1,8 +1,9 @@
 import { ref, reactive } from 'vue'
 import { parkid, errorid, fetchParkId } from '../states/parcheggio';
 
-const API_URL = 'http://localhost:3000';
-const PRENOTAZIONE_URL = API_URL+'/v1/prenotazione/';
+const HOST = import.meta.env.VITE_API_HOST || `http://localhost:3000`;
+const API_URL = HOST + '/v1';
+const PRENOTAZIONE_URL = API_URL+'/prenotazione/';
 
 const responsePrenotazione = ref(null);
 const errorePrenotazione = ref(null);
