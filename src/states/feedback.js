@@ -38,7 +38,6 @@ async function fetch_get_feedback(token){
             throw new Error(err.error);
         }
         response = await response.json();
-        console.log(response.feedback)
         responseFeedback.value = response.feedback;
     } catch(err) {
         if(err.message === "jwt expired"){

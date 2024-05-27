@@ -27,9 +27,6 @@ onMounted(() => {
 
 <template>
     <v-sheet class="d-flex flex-wrap justify-center">
-
-        
-
     <v-sheet class=" ma-2 pa-2 ">
         <div v-if="errorid">{{ errorid }}</div>
     <div v-else-if="!parkid"><v-progress-circular indeterminate></v-progress-circular></div>
@@ -104,6 +101,24 @@ onMounted(() => {
         <div v-else class="d-flex justify-center  mb-6">
             <v-card flat>
             <div><h1> Feedback: </h1></div>
+            <div v-if="!token">
+                <v-container >
+                    <v-row align="center" justify="start">
+                    <v-col cols="auto">
+                        <v-btn variant="outlined" disabled>Lascia il tuo feedback!</v-btn>
+                    </v-col>
+                    <v-col cols="auto">
+                        <span>Effettuare il login</span>
+                    </v-col>
+                    </v-row>
+                </v-container>
+            </div>
+            <div v-else>
+                <router-link :to="{name: 'formFeedback', params:{parcheggioId: props.parcheggioId}}" style="text-decoration: none; color: inherit;">
+                <v-btn variant="outlined">Lascia il tuo feedback!</v-btn>
+                </router-link>
+            </div>
+
             <div v-for="p in responseFeedbackPark.value" :key="p._id">
                 <v-card variant="outlined" class="ma-2 pa-2">
                     <h3>Rating:</h3>

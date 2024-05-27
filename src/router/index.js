@@ -8,6 +8,7 @@ import LoginView from '../views/LoginView.vue'
 import PrenotazioneView from '../views/PrenotazioneView.vue'
 import ListaPrenotazioniView from '../views/ListaPrenotazioniView.vue'
 import ListaFeedbackView from '../views/ListaFeedbackView.vue'
+import FormFeedbackView from '../views/FormFeedbackView.vue'
 
 
 const router = createRouter({
@@ -60,6 +61,12 @@ const router = createRouter({
       path: '/feedback',
       name: 'listaFeedback',
       component: ListaFeedbackView
+    },
+    {
+      path: '/formfeedback/:parcheggioId',
+      name: 'formFeedback',
+      props: true,
+      component: FormFeedbackView
     },
     {
       path: '/about',

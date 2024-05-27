@@ -17,9 +17,10 @@ onMounted(() => {
     <div v-if="token" class="Feedback">
         <h1>I miei feedback:</h1>
         <div v-if="errorFeedback">{{ errorFeedback }}</div>
-        <div v-else-if="!responseFeedback.value" class="d-flex justify-center ma-10"><v-progress-circular indeterminate></v-progress-circular></div>
+        <div v-else-if="!responseFeedback" class="d-flex justify-center ma-10"><v-progress-circular indeterminate></v-progress-circular></div>
         <div v-else class=" justify-center">
             <div v-for="p in responseFeedback.value" :key="p._id" class="d-flex justify-center">
+                <router-link v-if="p._id !== undefined" :to="{name: 'dettaglipark', params: {parcheggioId: p.parcheggioId}}" style="text-decoration: none; color: inherit;">
                 <v-card variant="outlined" flat class="pa-6 ma-2" >
                     <h3>Rating:</h3>
                     <v-rating readonly
@@ -31,6 +32,7 @@ onMounted(() => {
                     <p>Da: {{ p.utenteMail }}</p>
                     <p> {{ p.testoFeedback }}</p>
                 </v-card>
+                </router-link>
             </div>
         </div>    
     </div>
