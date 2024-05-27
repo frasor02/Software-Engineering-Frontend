@@ -10,6 +10,7 @@ const errorePrenotazione = ref(null);
 const scadenzaPrenotazione = ref(null);
 const scadenzaCancellazione = ref(null);
 
+
 const resFetch = reactive([]);
 const errFetch = ref(null);
 
@@ -46,7 +47,8 @@ async function createPrenotazione(parcheggioId, tipoPosto, token){
 
         const response = await fetch(PRENOTAZIONE_URL, requestOptions);
         if (!response.ok){
-            throw new Error('Prenotazione fallita');
+            let err = await response.json();
+            throw new Error(err.error);
         }
         responsePrenotazione.value = await response.json();
 
@@ -56,7 +58,13 @@ async function createPrenotazione(parcheggioId, tipoPosto, token){
         scadenzaCancellazione.value = new Date(responsePrenotazione.value.createdPrenotazione.dataPrenotazione);
         scadenzaCancellazione.value.setTime(scadenzaCancellazione.value.getTime() + 30*60*1000);
     } catch(err) {
-        errorePrenotazione.value = err.message;
+        if(err.message === "jwt expired"){
+            localStorage.removeItem("token"); 
+            window.location.reload();
+            errorePrenotazione.value = "Effettuare login";
+        }else{
+            errorePrenotazione.value = err.message;
+        }
     }
 };
 
@@ -76,12 +84,19 @@ async function fetchPrenotazioni(token){
     try {
         let response = await fetch(PRENOTAZIONE_URL, requestOptions);
         if (!response.ok){
-            throw new Error('Fetch fallita');
+            let err = await response.json();
+            throw new Error(err.error);
         }
         response = await response.json();
         resFetch.value = response.prenotazioni;
     } catch(err) {
-        errFetch.value = err.message;
+        if(err.message === "jwt expired"){
+            localStorage.removeItem("token"); 
+            window.location.reload();
+            errFetch.value = "Effettuare login";
+        }else{
+            errFetch.value = err.message;
+        }
     }
     for (let p of resFetch.value){
         try {
@@ -115,12 +130,18 @@ async function deletePrenotazione(prenotazioneId, token){
         errDelete.value = null;
         const response = await fetch(PRENOTAZIONE_URL + ':' + prenotazioneId, requestOptions);
         if (!response.ok){
-            throw new Error('Delete fallita');
+            let err = await response.json();
+            throw new Error(err.error);
         }
         resDelete.value = await response.json();
-        console.log(resDelete)
     } catch(err) {
-        errDelete.value = err.message;
+        if(err.message === "jwt expired"){
+            localStorage.removeItem("token"); 
+            window.location.reload();
+            errDelete.value = "Effettuare login";
+        }else{
+            errDelete.value = err.message;
+        }
     }
 };
 

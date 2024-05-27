@@ -7,6 +7,8 @@ import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
 import PrenotazioneView from '../views/PrenotazioneView.vue'
 import ListaPrenotazioniView from '../views/ListaPrenotazioniView.vue'
+import ListaFeedbackView from '../views/ListaFeedbackView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,6 +55,11 @@ const router = createRouter({
       path: '/prenotazioni',
       name: 'listaPrenotazioni',
       component: ListaPrenotazioniView
+    },
+    {
+      path: '/feedback',
+      name: 'listaFeedback',
+      component: ListaFeedbackView
     },
     {
       path: '/about',

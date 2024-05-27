@@ -25,13 +25,19 @@ onMounted(() => {
 
 <template>
     <v-sheet class="d-flex flex-wrap justify-center">
+
+        <v-sheet class="ma-2 pa-2">
+            <div><h3>Posizione:</h3></div>
+            <div><Map :lat="parkid.res.posizione.coordinates[1]" :long="parkid.res.posizione.coordinates[0]" :key="componentKey" /></div>
+        </v-sheet>
+
     <v-sheet class=" ma-2 pa-2 ">
         <div v-if="errorid">{{ errorid }}</div>
     <div v-else-if="!parkid"><v-progress-circular indeterminate></v-progress-circular></div>
     <div v-else class="d-flex   mb-6">
-        <v-list lines="one">
-            <v-list-item>
-                <h1>{{parkid.res.nome}}</h1>
+        <v-sheet class="d-flex flex-wrap">
+        <v-sheet class="flex-1-0 ma-2 pa-2">
+            <h1>{{parkid.res.nome}}</h1>
                 <div  v-if="parkid.res._type === 'ParcheggioFree'">
                     <v-chip variant="outlined">
                     Parcheggio gratuito
@@ -80,10 +86,12 @@ onMounted(() => {
                         </router-link>
                     </div>
                 </div>
-                <div><h3>Posizione:</h3></div>
-                <div><Map :lat="parkid.res.posizione.coordinates[1]" :long="parkid.res.posizione.coordinates[0]" :key="componentKey" /></div>
-            </v-list-item>
-        </v-list>
+        </v-sheet>
+
+        
+        </v-sheet>
+
+        
     </div>
     </v-sheet>
     <v-sheet class="ma-2 pa-2">
@@ -91,7 +99,7 @@ onMounted(() => {
         <div v-else-if="!responseFeedbackPark"><v-progress-circular indeterminate></v-progress-circular></div>
         <div v-else class="d-flex justify-center  mb-6">
             <v-card flat>
-            <div><h1> Recensioni: </h1></div>
+            <div><h1> Feedback: </h1></div>
             <div v-for="p in responseFeedbackPark.value" :key="p._id">
                 <v-card variant="outlined" class="ma-2 pa-2">
                     <h3>Rating:</h3>

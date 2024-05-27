@@ -1,5 +1,5 @@
 <script setup>
-    import { onMounted, onUpdated, ref, computed } from 'vue';
+    import { onMounted, onUpdated, ref } from 'vue';
     import { resFetch, errFetch, resDelete, errDelete, fetchPrenotazioni, deletePrenotazione } from '../states/prenotazione';
     import router from '../router';
 
@@ -43,6 +43,7 @@
 
 <template>
     <div v-if="token" class="Prenotazioni">
+        <h1>Prenotazioni:</h1>
         <div v-if="errFetch">{{ errFetch }}</div>
         <div v-else-if="!resFetch.value" class="d-flex justify-center ma-10"><v-progress-circular indeterminate></v-progress-circular></div>
         <div v-else>

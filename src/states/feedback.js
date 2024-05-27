@@ -1,4 +1,6 @@
 import { ref, reactive } from 'vue'
+import { parkid, errorid, fetchParkId } from '../states/parcheggio';
+
 
 const HOST = import.meta.env.VITE_API_HOST || `http://localhost:3000`;
 const API_URL = HOST + '/v1';
@@ -32,13 +34,29 @@ async function fetch_get_feedback(token){
     try {
         let response = await fetch(FEED_URL, requestOptions);
         if (!response.ok){
-            throw new Error('Fetch fallita');
+            let err = await response.json();
+            throw new Error(err.error);
         }
         response = await response.json();
-        responseFeedback.value = response.prenotazioni;
+        console.log(response.feedback)
+        responseFeedback.value = response.feedback;
     } catch(err) {
-        errorFeedback.value = err.message;
+        if(err.message === "jwt expired"){
+            localStorage.removeItem("token"); 
+            window.location.reload();
+            errorFeedback.value = "Effettuare login";
+        }else{
+            errorFeedback.value = err.message;
+        }
     };
+    for (let p of responseFeedback.value){
+        try {
+            await fetchParkId(p.parcheggioId);
+            p.nomeParcheggio = parkid.value.res.nome;
+        } catch(err) {
+            p.nomeParcheggio = "Not found";
+        }
+    }
 };
 
 /**
@@ -55,12 +73,19 @@ async function fetch_get_feedback_park(parkid){
     try {
         let response = await fetch(FEED_PARK_URL + ':' + parkid + '/feedback', requestOptions);
         if (!response.ok){
-            throw new Error('Fetch fallita');
+            let err = await response.json();
+            throw new Error(err.error);
         }
         response = await response.json();
-        responseFeedbackPark.value = response.prenotazioni;
+        responseFeedbackPark.value = response.prenotazioni; //da sistemare nel backend
     } catch(err) {
-        errorFeedbackPark.value = err.message;
+        if(err.message === "jwt expired"){
+            localStorage.removeItem("token"); 
+            window.location.reload();
+            errorFeedbackPark.value = "Effettuare login";
+        }else{
+            errorFeedbackPark.value = err.message;
+        }
     };
 };
 
@@ -89,11 +114,18 @@ async function fetch_post_feedback(parcheggioId, rating, testoFeedback, token){
     try{
         const response = await fetch(FEED_URL, requestOptions);
         if (!response.ok){
-            throw new Error('Prenotazione fallita');
+            let err = await response.json();
+            throw new Error(err.error);
         }
         responsePostFeedback.value = await response.json();
     }catch(err){
-        errorPostFeedback.value = err.message;
+        if(err.message === "jwt expired"){
+            localStorage.removeItem("token"); 
+            window.location.reload();
+            errorPostFeedback.value = "Effettuare login";
+        }else{
+            errorPostFeedback.value = err.message;
+        }
     }
 };
 
