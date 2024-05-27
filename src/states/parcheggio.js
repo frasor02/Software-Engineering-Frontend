@@ -1,8 +1,8 @@
 import { ref, reactive } from 'vue'
 
-const HOST = 'http://localhost:5173';
-const API_URL = 'http://localhost:3000';
-const PARK_URL = API_URL+'/v1/parcheggio/';
+const HOST = import.meta.env.VITE_API_HOST || `http://localhost:3000`;
+const API_URL = HOST + '/v1';
+const PARK_URL = API_URL+'/parcheggio/';
 
 const park = reactive([]);
 const parkid = ref(null);

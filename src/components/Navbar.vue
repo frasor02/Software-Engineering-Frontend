@@ -59,6 +59,7 @@ onMounted(() => {
         <v-list>
             <v-list-item prepend-icon='mdi-magnify' title='Ricerca parcheggio' to="/parcheggio/ricerca"></v-list-item>
             <v-list-item prepend-icon='mdi-parking' title='Vedi i parcheggi' to="/parcheggio/"></v-list-item>
+            <v-list-item prepend-icon='mdi-invoice-clock' title='Le mie prenotazioni' to="/prenotazioni"></v-list-item>
             <v-list-item prepend-icon='mdi-account-group' title='Conosci il progetto' to="/about/"></v-list-item>
         </v-list>
     </v-navigation-drawer>
