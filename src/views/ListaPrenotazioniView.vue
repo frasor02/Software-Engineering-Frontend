@@ -1,5 +1,5 @@
 <script setup>
-    import { onMounted, onUpdated, ref } from 'vue';
+    import { onMounted, onUpdated, ref, computed } from 'vue';
     import { resFetch, errFetch, resDelete, errDelete, fetchPrenotazioni, deletePrenotazione } from '../states/prenotazione';
     import router from '../router';
 
@@ -18,6 +18,14 @@
             fetchPrenotazioni(token.value);
         }
     });
+
+    /**
+     * Funzione che controlla se è possibile cancellare la prenotazione
+     * @param data data in cui è stata effettuata la prenotazione
+     */
+    function canDelete(data){
+        return (new Date().getTime()) - new Date(data).getTime() < 30*60*1000;
+    }
 
     /**
      * Funziona wrapper della funzione deletePrenotazione che ricorda 
@@ -60,10 +68,17 @@
                 <v-card class="align-self-center ml-1">
                     <v-hover v-slot="{ isHovering, props }">
                         <v-card-actions>
-                            <v-btn :color="isHovering ? 'red' : undefined" v-bind="props" icon @click="delPrenotazione(p._id)">
-                                <v-icon color="red-lighten-1">mdi-trash-can-outline</v-icon>
-                            </v-btn>
-                            <v-card-text v-if="errDelete && p._id == lastDeleteId">{{ errDelete }}</v-card-text>
+                            <div v-if="canDelete(p.dataPrenotazione)">
+                                <v-btn :color="isHovering ? 'red' : undefined" v-bind="props" icon @click="delPrenotazione(p._id)">
+                                    <v-icon color="red-lighten-1">mdi-trash-can-outline</v-icon>
+                                </v-btn>
+                                <v-card-text v-if="errDelete && p._id == lastDeleteId">{{ errDelete }}</v-card-text>
+                            </div>
+                            <div v-else>
+                                <v-btn :color="isHovering ? 'red' : undefined" v-bind="props" disabled icon @click="delPrenotazione(p._id)">
+                                    <v-icon color="red-lighten-1">mdi-trash-can-outline</v-icon>
+                                </v-btn>
+                            </div>
                         </v-card-actions>
                     </v-hover>
                 </v-card>
