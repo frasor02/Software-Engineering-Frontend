@@ -19,7 +19,7 @@
           <v-text-field :rules="ruleTarga" label="Targa del veicolo" variant="outlined" v-model="targa"></v-text-field>
           <v-combobox :rules="rulePagamento" :items="['carta di credito', 'carta di debito', 'paypal']" label="Metodo di pagamento" v-model="metodoPagamento"></v-combobox>
           <v-checkbox :rules="ruleMaggiorenne" label="Dichiaro di essere maggiorenne" v-model="isAdult"></v-checkbox>
-          <v-btn type="submit" svariant="outlined"> Conferma registrazione</v-btn>
+          <v-btn type="submit" variant="outlined"> Conferma registrazione</v-btn>
           </v-form> 
         </div>
         <div v-else>
