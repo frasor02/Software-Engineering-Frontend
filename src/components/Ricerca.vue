@@ -28,7 +28,8 @@ function ricerca(){
 
 
 <template>
-    <div >
+    <v-sheet class="d-flex flex-wrap justify-left">
+    <v-sheet class=" ma-2 pa-2 ">
         <v-card  variant="text">
             <div><h3>Ricerca parcheggio</h3></div>
             <div><p>Le seguenti opzioni consentono di cercare un parcheggio che rispetta le tue esigenze!</p></div>
@@ -47,6 +48,9 @@ function ricerca(){
                 <v-btn type="submit" variant="outlined" color="blue-darken-3">Cerca</v-btn>
             </v-form>
         </v-card>
+    </v-sheet>
+
+    <v-sheet class=" ma-2 pa-2 ">
         <div v-if="errorsearch">{{ errorsearch }}</div>
         <div v-else-if="!parksearch.value"></div>
         <div v-else>
@@ -66,7 +70,7 @@ function ricerca(){
                 </v-card>
                 </router-link>
             </div>
-
         </div>
-    </div>
+    </v-sheet>
+    </v-sheet>
 </template>

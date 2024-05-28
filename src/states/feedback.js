@@ -76,7 +76,7 @@ async function fetch_get_feedback_park(parkid){
             throw new Error(err.error);
         }
         response = await response.json();
-        responseFeedbackPark.value = response.prenotazioni; //da sistemare nel backend
+        responseFeedbackPark.value = response.feedback;
     } catch(err) {
         if(err.message === "jwt expired"){
             localStorage.removeItem("token"); 
