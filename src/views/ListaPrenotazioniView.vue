@@ -1,5 +1,5 @@
 <script setup>
-    import { onMounted, onUpdated, ref, computed } from 'vue';
+    import { onMounted, onUpdated, ref } from 'vue';
     import { resFetch, errFetch, resDelete, errDelete, fetchPrenotazioni, deletePrenotazione } from '../states/prenotazione';
     import router from '../router';
 
@@ -42,8 +42,9 @@
 </script>
 
 <template>
+    <h1 class="d-flex justify-center">Prenotazioni:</h1>
     <div v-if="token" class="Prenotazioni">
-        <div v-if="errFetch">{{ errFetch }}</div>
+        <div v-if="errFetch" class="d-flex justify-center"><h2>{{ errFetch }}</h2></div>
         <div v-else-if="!resFetch.value" class="d-flex justify-center ma-10"><v-progress-circular indeterminate></v-progress-circular></div>
         <div v-else>
             <div v-for="p in resFetch.value" :key="p._id" class="d-flex justify-center mb-6 mt-6">
@@ -85,5 +86,5 @@
             </div>
         </div> 
     </div>
-    <div v-else>Effettua il login</div>
+    <div v-else class="d-flex justify-center"><h2>Effettua il login per accedere alla risorsa.</h2></div>
 </template>

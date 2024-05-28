@@ -1,7 +1,10 @@
 <script setup>
-import { ref} from 'vue'
+import { ref, computed} from 'vue'
 import {parksearch, errorsearch, fetchParkSearch} from '../states/parcheggio'
 import MapSearch from './MapSearch.vue'
+
+
+const search = ref("");
 
 const lat = ref(null)
 const long = ref(null)
@@ -24,11 +27,18 @@ function ricerca(){
         fetchParkSearch(lat.value, long.value, isCoperto.value, comboPosti.value, comboVeicolo.value);
     }
 }
+
+const filteredParks = computed(() => {
+  return parksearch.value.parcheggi.filter((park) => {
+    return park.nome.toLowerCase().match(search.value.toLowerCase());
+  })
+})
 </script>
 
 
 <template>
-    <div >
+    <v-sheet class="d-flex flex-wrap justify-left">
+    <v-sheet class=" ma-2 pa-2 ">
         <v-card  variant="text">
             <div><h3>Ricerca parcheggio</h3></div>
             <div><p>Le seguenti opzioni consentono di cercare un parcheggio che rispetta le tue esigenze!</p></div>
@@ -47,11 +57,15 @@ function ricerca(){
                 <v-btn type="submit" variant="outlined" color="blue-darken-3">Cerca</v-btn>
             </v-form>
         </v-card>
-        <div v-if="errorsearch">{{ errorsearch }}</div>
-        <div v-else-if="!parksearch.value"></div>
+    </v-sheet>
+
+    <v-sheet class=" ma-2 pa-2 ">
+        <div v-if="errorsearch" class="d-flex justify-center"><h2>{{ errorsearch }}</h2></div>
+        <div v-else-if="!parksearch.value" class="d-flex justify-center"></div>
         <div v-else>
             <h3>Parcheggi Trovati:</h3>
-            <div v-for="p in parksearch.value.parcheggi" :key="p._id">
+            <v-responsive class="mx-auto" max-width="344"><v-text-field label="Nome Parcheggio" v-model="search"></v-text-field></v-responsive>
+            <div v-for="p in filteredParks" :key="p._id">
                 <router-link v-if="p._id !== undefined" :to="{name: 'dettaglipark', params: {parcheggioId: p._id}}" style="text-decoration: none; color: inherit;">
                 <v-card class="pa-6">
                 <h3>Nome Parcheggio: {{ p.nome }}</h3>
@@ -66,7 +80,7 @@ function ricerca(){
                 </v-card>
                 </router-link>
             </div>
-
         </div>
-    </div>
+    </v-sheet>
+    </v-sheet>
 </template>
