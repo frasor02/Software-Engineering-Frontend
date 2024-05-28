@@ -14,9 +14,9 @@ onMounted(() => {
 </script>
 
 <template>
+    <h1 class="d-flex justify-center">I miei feedback:</h1>
     <div v-if="token" class="Feedback">
-        <h1>I miei feedback:</h1>
-        <div v-if="errorFeedback">{{ errorFeedback }}</div>
+        <div v-if="errorFeedback" class="d-flex justify-center"><h2> {{ errorFeedback }}</h2></div>
         <div v-else-if="!responseFeedback" class="d-flex justify-center ma-10"><v-progress-circular indeterminate></v-progress-circular></div>
         <div v-else class=" justify-center">
             <div v-for="p in responseFeedback.value" :key="p._id" class="d-flex justify-center">
@@ -36,5 +36,5 @@ onMounted(() => {
             </div>
         </div>    
     </div>
-    <div v-else>Effettua il login</div>
+    <div v-else class="d-flex justify-center"><h2>Effettua il login per accedere alla risorsa.</h2></div>
 </template>
