@@ -1,7 +1,10 @@
 <script setup>
-import { ref} from 'vue'
+import { ref, computed} from 'vue'
 import {parksearch, errorsearch, fetchParkSearch} from '../states/parcheggio'
 import MapSearch from './MapSearch.vue'
+
+
+const search = ref("");
 
 const lat = ref(null)
 const long = ref(null)
@@ -24,6 +27,12 @@ function ricerca(){
         fetchParkSearch(lat.value, long.value, isCoperto.value, comboPosti.value, comboVeicolo.value);
     }
 }
+
+const filteredParks = computed(() => {
+  return parksearch.value.parcheggi.filter((park) => {
+    return park.nome.toLowerCase().match(search.value.toLowerCase());
+  })
+})
 </script>
 
 
@@ -55,7 +64,8 @@ function ricerca(){
         <div v-else-if="!parksearch.value"></div>
         <div v-else>
             <h3>Parcheggi Trovati:</h3>
-            <div v-for="p in parksearch.value.parcheggi" :key="p._id">
+            <v-responsive class="mx-auto" max-width="344"><v-text-field label="Nome Parcheggio" v-model="search"></v-text-field></v-responsive>
+            <div v-for="p in filteredParks" :key="p._id">
                 <router-link v-if="p._id !== undefined" :to="{name: 'dettaglipark', params: {parcheggioId: p._id}}" style="text-decoration: none; color: inherit;">
                 <v-card class="pa-6">
                 <h3>Nome Parcheggio: {{ p.nome }}</h3>
