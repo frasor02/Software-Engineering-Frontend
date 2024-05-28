@@ -3,9 +3,13 @@
 </template>
 
 <script setup>
-import {onMounted } from 'vue';
+import {onMounted, onUpdated } from 'vue';
 import {map, mountMap, addMarker} from "@/states/mappa.js"
 const props = defineProps(['lat', 'long'])
+
+onUpdated(() => {
+    window.location.reload();
+})
 
 onMounted(() => {
     mountMap(props.lat,props.long);

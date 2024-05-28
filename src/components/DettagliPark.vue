@@ -1,20 +1,12 @@
 <script setup>
-import {onMounted, ref, onUpdated} from 'vue';
+import {onMounted, ref} from 'vue';
 import { parkid, errorid, fetchParkId } from '../states/parcheggio.js';
 import { responseFeedbackPark, errorFeedbackPark, fetch_get_feedback_park } from '../states/feedback.js';
 import Map from './Map.vue';
 const props = defineProps(['parcheggioId']);
 
-const componentKey = ref(0);
 const token = ref();
 
-const forceRerender = () => {
-  componentKey.value += 1;
-};
-
-onUpdated(()=>{
-    forceRerender();
-})
 
 onMounted(() => {
     fetchParkId(props.parcheggioId);
@@ -28,13 +20,13 @@ onMounted(() => {
 <template>
     <v-sheet class="d-flex flex-wrap justify-center">
     <v-sheet class=" ma-2 pa-2 ">
-        <div v-if="errorid">{{ errorid }}</div>
-    <div v-else-if="!parkid"><v-progress-circular indeterminate></v-progress-circular></div>
+    <div v-if="errorid" class="d-flex justify-center"><h2>{{ errorid }}</h2></div>
+    <div v-else-if="!parkid" class="d-flex justify-center"><v-progress-circular indeterminate></v-progress-circular></div>
     <div v-else class="d-flex   mb-6">
         <v-sheet class="d-flex flex-wrap">
             <v-sheet class="ma-2 pa-2">
                 <div><h3>Posizione:</h3></div>
-                <div><Map :lat="parkid.res.posizione.coordinates[1]" :long="parkid.res.posizione.coordinates[0]" :key="componentKey" /></div>
+                <div><Map :lat="parkid.res.posizione.coordinates[1]" :long="parkid.res.posizione.coordinates[0]" /></div>
             </v-sheet>
 
         <v-sheet class=" ma-2 pa-2">

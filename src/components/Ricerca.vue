@@ -60,8 +60,8 @@ const filteredParks = computed(() => {
     </v-sheet>
 
     <v-sheet class=" ma-2 pa-2 ">
-        <div v-if="errorsearch">{{ errorsearch }}</div>
-        <div v-else-if="!parksearch.value"></div>
+        <div v-if="errorsearch" class="d-flex justify-center"><h2>{{ errorsearch }}</h2></div>
+        <div v-else-if="!parksearch.value" class="d-flex justify-center"></div>
         <div v-else>
             <h3>Parcheggi Trovati:</h3>
             <v-responsive class="mx-auto" max-width="344"><v-text-field label="Nome Parcheggio" v-model="search"></v-text-field></v-responsive>

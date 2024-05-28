@@ -21,8 +21,8 @@ const filteredParks = computed(() => {
 
 <template>
   <div class="Parcheggio">
-    <div v-if="error">{{ error }}</div>
-    <div v-else-if="!park.value"><v-progress-circular indeterminate></v-progress-circular></div>
+    <div v-if="error" class="d-flex justify-center"><h2>{{ error }}</h2></div>
+    <div v-else-if="!park.value" class="d-flex justify-center"><v-progress-circular indeterminate></v-progress-circular></div>
     <div v-else>
       <v-responsive class="mx-auto" max-width="344"><v-text-field label="Nome Parcheggio" v-model="search"></v-text-field></v-responsive>
       
