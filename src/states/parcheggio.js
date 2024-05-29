@@ -60,7 +60,7 @@ async function fetchParkSearch(lat, long, isCoperto, comboPosti, comboVeicolo){
             break;
         }
         default:{
-            tipoUtente = null;
+            tipoUtente = "default";
             break;
         }
     }
@@ -82,14 +82,14 @@ async function fetchParkSearch(lat, long, isCoperto, comboPosti, comboVeicolo){
             break;
         }
         default:{
-            tipoVeicolo = null;
+            tipoVeicolo = "default";
             break;
         }
     }
     try{
-        const ricercaURL = PARK_URL + "ricerca?lat=" + lat + "&long=" + long + "&isCoperto=" + isCoperto + "&tipoUtente=" + tipoUtente + "&tipoVeicolo=" + tipoVeicolo;
+        const ricercaURL = PARK_URL + "ricerca?lat=" + lat + "&long=" + long + "&isCoperto=" + isCoperto + "&utente=" + tipoUtente + "&veicolo=" + tipoVeicolo;
         console.log(ricercaURL)
-        let data = await fetch(PARK_URL + "ricerca?lat=" + lat + "&long=" + long + "&isCoperto=" + isCoperto + "&tipoUtente=" + tipoUtente + "&tipoVeicolo=" + tipoVeicolo);
+        let data = await fetch(ricercaURL);
         if(!data.ok){
             throw new Error("Data not found");
         }
