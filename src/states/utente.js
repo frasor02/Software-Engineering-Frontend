@@ -5,12 +5,21 @@ const API_URL = HOST + '/v1';
 const REGISTRAZIONE_URL = API_URL+'/utente/';
 const TOKEN_URL = API_URL+'/token/';
 
+// Variabili delle risposte alle fetch, successivamente mostrate sulla pagina web.
 const response_registrazione = reactive({});
 const errore = ref(null);
 const response_login = reactive({});
 const errore_login = ref(null);
 
-// Funzione che fa il fetch della POST su /utente/ nel backend
+/** Funzione che fa il fetch della POST su /utente/ nel backend
+ * Non sono stati implementati dei controlli sulle stringhe date in input data la bassa priorità.
+ * Essendo il frontend diretto solo all'utente base non è possibile registrare un profilo admin.
+* @param {string} email email con cui l'utente vuole registrarsi
+* @param {string} password password con cui l'utente vuole registrarsi
+* @param {string} metodoPagamento metodo di pagamento dell'utente, placeholder per potenziale integrazione con sistemi di pagamento
+* @param {string} tipoVeicolo tipologia di veicolo utilizzata per prenotare un posto e per il pagamento
+* @param {string} targa stringa della targa del veicolo da registrare.   
+*/
 async function fetchRegistrazione(email, password, metodoPagamento, tipoVeicolo, targa){
     console.log(email, password, metodoPagamento, tipoVeicolo, targa);
    let utente={
@@ -38,6 +47,12 @@ async function fetchRegistrazione(email, password, metodoPagamento, tipoVeicolo,
     }
 };
 
+/** Funzione che fa il fetch della POST su /token/ nel backend
+ * Il token ottenuto viene salvato nel LocalStorage per poi essere utilizzato in successive chiamate al backend.
+ * Questa scelta è solo a scopo dimostrativo delle funzionalità frontend per l'utente poiché non garantisce la sicurezza del token.
+* @param {string} email email con cui l'utente vuole registrarsi
+* @param {string} password password con cui l'utente vuole registrarsi
+*/
 async function fetchLogin(email, password){
     errore_login.value = null;
    let richiesta={
