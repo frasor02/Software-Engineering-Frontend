@@ -9,7 +9,7 @@ const realTheme = useTheme();
 const router = useRouter();
 
 function changeTheme(){
-    theme.value = !theme.value;
+    theme.value = !theme.value
     realTheme.global.name.value = theme.value ? "dark" : "light";
 }
 
