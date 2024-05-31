@@ -13,9 +13,4 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-
-  // base: process.env.BASE_PATH || '/'
-  base: process.env.NODE_ENV === 'production'
-          ? '/RPEApp/' // prod
-          : '/', // dev
 })
